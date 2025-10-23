@@ -156,11 +156,23 @@
   }
 
   function applyCustomTheme() {
-    const theme = JSON.parse(localStorage.getItem("theme") || "{}")
+    // Prefer backend-provided theme saved by apiClient
+    const clientThemeStr = localStorage.getItem("client_theme")
+    const legacyThemeStr = localStorage.getItem("theme")
+    const theme = clientThemeStr ? JSON.parse(clientThemeStr) : legacyThemeStr ? JSON.parse(legacyThemeStr) : {}
 
     if (Object.keys(theme).length > 0) {
       const root = document.documentElement
 
+      // Handle backend keys
+      if (theme.primary_color) {
+        root.style.setProperty("--accent", theme.primary_color)
+        root.style.setProperty("--accent-hover", theme.secondary_color || theme.primary_color)
+      }
+      if (theme.accent_color) root.style.setProperty("--success", theme.accent_color)
+      if (theme.text_color) root.style.setProperty("--text-primary", theme.text_color)
+
+      // Legacy keys fallback
       if (theme.primary) {
         root.style.setProperty("--accent", theme.primary)
         root.style.setProperty("--accent-hover", theme.secondary || theme.primary)
@@ -893,6 +905,8 @@
   }
 })()
 
-if (!localStorage.getItem("isLoggedIn")) {
+// Enforce auth via JWT presence
+const accessToken = localStorage.getItem("access_token")
+if (!accessToken) {
   window.location.href = "login.html"
 }

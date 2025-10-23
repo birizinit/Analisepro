@@ -21,17 +21,17 @@ tabBtns.forEach((btn) => {
 document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
   e.preventDefault()
 
-  const email = document.getElementById("email").value
+  const username = document.getElementById("username").value
   const password = document.getElementById("password").value
 
-  if (!email || !password) {
+  if (!username || !password) {
     alert("Por favor, preencha todos os campos")
     return
   }
 
   try {
-    // Try client admin login first (uses username field but we're using email input)
-    const data = await window.apiClient.loginClient(email, password)
+    // Tenta login do cliente admin (usa username conforme backend)
+    const data = await window.apiClient.loginClient(username, password)
 
     console.log("[v0] Login successful:", data.role)
 
@@ -81,4 +81,8 @@ function applyClientTheme(client) {
   if (client.secondary_color) root.style.setProperty("--accent-hover", client.secondary_color)
   if (client.accent_color) root.style.setProperty("--success", client.accent_color)
   if (client.text_color) root.style.setProperty("--text-primary", client.text_color)
+  // persist theme for app
+  try {
+    localStorage.setItem("client_theme", JSON.stringify(client))
+  } catch {}
 }
