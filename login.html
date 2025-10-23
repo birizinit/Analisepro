@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicador Pro</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+            </div>
+            <h1>Meu Indicador Pro</h1>
+            <p class="subtitle">Faça login para continuar</p>
+            
+            <div class="login-tabs">
+                <button class="tab-btn active" data-tab="admin">Admin</button>
+                <button class="tab-btn" data-tab="client">Cliente</button>
+            </div>
+            
+            <form id="adminLoginForm" class="login-form active">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn-login">Entrar como Admin</button>
+                <p class="form-note">Acesso ao painel administrativo</p>
+            </form>
+            
+            <form id="clientLoginForm" class="login-form">
+                <div class="input-group">
+                    <label for="token">Token de Acesso</label>
+                    <input type="text" id="token" placeholder="Digite seu token" required>
+                </div>
+                
+                <button type="submit" class="btn-login">Entrar com Token</button>
+                <p class="form-note">Token fornecido pelo administrador</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Added API client script -->
+    <script src="api-client.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>
